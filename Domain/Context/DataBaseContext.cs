@@ -18,6 +18,8 @@ namespace Domain.Context
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfiguration(new TaskConfig());
+            modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
+            modelBuilder.ApplyConfiguration(new DepartmentConfiguration());
         }
 
         public DbSet<Employee> Employees { get; set; }

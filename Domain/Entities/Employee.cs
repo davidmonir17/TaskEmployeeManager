@@ -26,10 +26,7 @@ namespace Domain.Entities
         [MaxLength(60, ErrorMessage = "Email Field not Exceded 60 char")]
         public string Email { get; set; }
 
-        [ForeignKey(nameof(depertment))]
-        [Required]
         public int depId { get; set; }
-
         public Depertment depertment { get; set; }
 
         public IEnumerable<Task> EmployeeTasks { get; set; }

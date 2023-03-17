@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TaskEmployeeManager.ExtinsionMethod;
 
 namespace TaskEmployeeManager
 {
@@ -26,7 +27,7 @@ namespace TaskEmployeeManager
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.sqlconfigration(Configuration);
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

@@ -17,12 +17,9 @@ namespace Domain.Entities
         [MaxLength(60, ErrorMessage = "name Field not Exceded 60 char")]
         public string Name { get; set; }
 
-        public IEnumerable<Employee> Employees { get; set; }
-
-        [ForeignKey(nameof(manger))]
-        [Required]
-        public int MangerId { get; set; }
-
+        public int? MangerId { get; set; }
         public Employee manger { get; set; }
+
+        public IEnumerable<Employee> Employees { get; set; }
     }
 }
