@@ -22,8 +22,8 @@ namespace Domain.DataTransferObject
         [Required]
         public DateTime SubmitionDate { get; set; }
 
-        public string statuesName { get; set; }
+        public int statuesId { get; set; }
 
-        public string MangerName { get; set; }
+        public int MangerId { get; set; }
     }
 }

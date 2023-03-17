@@ -31,9 +31,9 @@ namespace Repository.Implmntation
         {
             if (statues == 0)
             {
-                return Find(x => x.EmployeeId == empid && x.statuesId != 3).Include(x => x.manger).ThenInclude(x => x.Name).Include(x => x.statues).ThenInclude(x => x.Name).OrderBy(x => x.SubmitionDate).ToList();
+                return Find(x => x.EmployeeId == empid && x.statuesId != 3).Include(x => x.manger).Include(x => x.statues).OrderBy(x => x.SubmitionDate).ToList();
             }
-            return Find(x => x.EmployeeId == empid && x.statuesId == statues).Include(x => x.manger).ThenInclude(x => x.Name).Include(x => x.statues).ThenInclude(x => x.Name).OrderBy(x => x.SubmitionDate).ToList();
+            return Find(x => x.EmployeeId == empid && x.statuesId == statues).Include(x => x.manger).Include(x => x.statues).OrderBy(x => x.SubmitionDate).ToList();
         }
 
         public IEnumerable<Task> GetAllTaskforMgr(int mgrId, int statues)
@@ -48,7 +48,7 @@ namespace Repository.Implmntation
         public Task GetTask(int id)
         {
             //return dbcontext.Tasks.Where(x => x.Id == id).FirstOrDefault();
-            return Find(x => x.Id == id).Include(x => x.manger).ThenInclude(x => x.Name).Include(x => x.statues).ThenInclude(x => x.Name).FirstOrDefault();
+            return Find(x => x.Id == id).Include(x => x.manger).Include(x => x.statues).FirstOrDefault();
         }
     }
 }

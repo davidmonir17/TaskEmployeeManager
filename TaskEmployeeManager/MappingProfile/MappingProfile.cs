@@ -12,14 +12,11 @@ namespace TaskEmployeeManager.MappingProfile
         public MappingProfile()
         {
             CreateMap<Task, EmpTasksDTO>()
-                .ForMember(x => x.statuesName, opt => opt.MapFrom(x => x.statues))
-                .ForMember(x => x.MangerName, opt => opt.MapFrom(x => x.manger))
+                .ForMember(x => x.statuesName, opt => opt.MapFrom(x => x.statues.Name))
+                .ForMember(x => x.MangerName, opt => opt.MapFrom(x => x.manger.Name))
                 .ReverseMap();
 
-            CreateMap<Task, UpdateEmpTaskDTO>()
-                .ForMember(x => x.statuesName, opt => opt.MapFrom(x => x.statues))
-                .ForMember(x => x.MangerName, opt => opt.MapFrom(x => x.manger))
-                .ReverseMap();
+            CreateMap<Task, UpdateEmpTaskDTO>().ReverseMap();
         }
     }
 }

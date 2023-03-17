@@ -36,7 +36,7 @@ namespace Services.Implmentation
             return null;
         }
 
-        public UpdateEmpTaskDTO UpdateTask(int empid, UpdateEmpTaskDTO uptedtask)
+        public EmpTasksDTO UpdateTask(int empid, UpdateEmpTaskDTO uptedtask)
         {
             if (empid != 0)
             {
@@ -46,7 +46,9 @@ namespace Services.Implmentation
                     var task = _repository.taskRepository.GetTask(uptedtask.Id);
                     _mapper.Map(uptedtask, task);
                     _repository.save();
-                    return uptedtask;
+                    var taskget = _repository.taskRepository.GetTask(uptedtask.Id);
+                    var TsksDTO = _mapper.Map<EmpTasksDTO>(taskget);
+                    return TsksDTO;
                 }
             }
             return null;

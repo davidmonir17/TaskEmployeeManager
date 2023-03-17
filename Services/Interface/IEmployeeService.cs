@@ -11,6 +11,6 @@ namespace Services.Interface
     {
         public IEnumerable<EmpTasksDTO> GetTasks(int empid);
 
-        public UpdateEmpTaskDTO UpdateTask(int empid, UpdateEmpTaskDTO uptedtask);
+        public EmpTasksDTO UpdateTask(int empid, UpdateEmpTaskDTO uptedtask);
     }
 }
