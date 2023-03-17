@@ -8,8 +8,10 @@ namespace Repository.Interface
 {
     public interface IRepositoryManager
     {
+        IStatuesRepository statuesRepository { get; }
         IDepartmentRepository departmentRepository { get; }
         IEmployeeRepository employeeRepository { get; }
+        ITaskRepository taskRepository { get; }
 
         void save();
     }

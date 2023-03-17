@@ -28,6 +28,8 @@ namespace TaskEmployeeManager
         public void ConfigureServices(IServiceCollection services)
         {
             services.sqlconfigration(Configuration);
+            services.RepositoryMgrConfig();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

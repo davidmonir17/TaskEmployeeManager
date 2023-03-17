@@ -13,6 +13,8 @@ namespace Repository.Implmntation
         private DataBaseContext _context;
         private IDepartmentRepository _departmentRepository;
         private IEmployeeRepository _employeeRepository;
+        private IStatuesRepository _statuesRepository;
+        private ITaskRepository _taskRepository;
 
         public RepositoryManager(DataBaseContext context)
         {
@@ -36,6 +38,26 @@ namespace Repository.Implmntation
                 if (_employeeRepository == null)
                     _employeeRepository = new EmployeeRepository(_context);
                 return _employeeRepository;
+            }
+        }
+
+        public IStatuesRepository statuesRepository
+        {
+            get
+            {
+                if (_statuesRepository == null)
+                    _statuesRepository = new StatuesRepository(_context);
+                return _statuesRepository;
+            }
+        }
+
+        public ITaskRepository taskRepository
+        {
+            get
+            {
+                if (_taskRepository == null)
+                    _taskRepository = new TaskRepository(_context);
+                return _taskRepository;
             }
         }
 
