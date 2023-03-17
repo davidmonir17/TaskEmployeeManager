@@ -15,9 +15,8 @@ namespace Repository.Implmntation
         {
         }
 
-        public void AddEmployee(int DepId, Employee employee)
+        public void AddEmployee(Employee employee)
         {
-            employee.depId = DepId;
             Add(employee);
         }
 
@@ -31,12 +30,7 @@ namespace Repository.Implmntation
             return Find(x => x.depId == Depid).ToList();
         }
 
-        public Employee GetEmployee(int DepId, int id)
-        {
-            return Find(x => x.depId == DepId && x.Id == id).FirstOrDefault();
-        }
-
-        public Employee GetEmployeeByid(int id)
+        public Employee GetEmployee(int id)
         {
             return Find(x => x.Id == id).FirstOrDefault();
         }

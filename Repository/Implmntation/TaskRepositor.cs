@@ -4,14 +4,17 @@ using System.Linq;
 using System.Text;
 using Domain.Context;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Repository.Interface;
 
 namespace Repository.Implmntation
 {
     public class TaskRepository : RepositoryBase<Task>, ITaskRepository
     {
+        //private DataBaseContext dbcontext;
         public TaskRepository(DataBaseContext dataBase) : base(dataBase)
         {
+            //dbcontext = dataBase;
         }
 
         public void AddTask(Task task)
@@ -28,9 +31,9 @@ namespace Repository.Implmntation
         {
             if (statues == 0)
             {
-                return Find(x => x.EmployeeId == empid && x.statuesId != 3).OrderBy(x => x.SubmitionDate).ToList();
+                return Find(x => x.EmployeeId == empid && x.statuesId != 3).Include(x => x.manger).ThenInclude(x => x.Name).Include(x => x.statues).ThenInclude(x => x.Name).OrderBy(x => x.SubmitionDate).ToList();
             }
-            return Find(x => x.EmployeeId == empid && x.statuesId == statues).OrderBy(x => x.SubmitionDate).ToList();
+            return Find(x => x.EmployeeId == empid && x.statuesId == statues).Include(x => x.manger).ThenInclude(x => x.Name).Include(x => x.statues).ThenInclude(x => x.Name).OrderBy(x => x.SubmitionDate).ToList();
         }
 
         public IEnumerable<Task> GetAllTaskforMgr(int mgrId, int statues)
@@ -42,9 +45,10 @@ namespace Repository.Implmntation
             return Find(x => x.MangerId == mgrId && x.statuesId == statues).OrderBy(x => x.SubmitionDate).ToList();
         }
 
-        public Task GetDepertment(int id)
+        public Task GetTask(int id)
         {
-            return Find(x => x.Id == id).FirstOrDefault();
+            //return dbcontext.Tasks.Where(x => x.Id == id).FirstOrDefault();
+            return Find(x => x.Id == id).Include(x => x.manger).ThenInclude(x => x.Name).Include(x => x.statues).ThenInclude(x => x.Name).FirstOrDefault();
         }
     }
 }

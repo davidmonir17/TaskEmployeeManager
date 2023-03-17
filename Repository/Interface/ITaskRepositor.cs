@@ -12,7 +12,7 @@ namespace Repository.Interface
 
         void DeleteTask(Task task);
 
-        Task GetDepertment(int id);
+        Task GetTask(int id);
 
         IEnumerable<Task> GetAllTaskforMgr(int mgrId, int statues);
 
