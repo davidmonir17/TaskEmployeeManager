@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Repository.Implmntation;
 using Repository.Interface;
+using Services.Implmentation;
+using Services.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +25,9 @@ namespace TaskEmployeeManager.ExtinsionMethod
 
         public static void RepositoryMgrConfig(this IServiceCollection services) =>
                         services.AddScoped<IRepositoryManager, RepositoryManager>();
+
+        public static void ConfigureServiceManager(this IServiceCollection services) =>
+            services.AddScoped<IServiceManager, ServiceManager>();
 
         //public static void ServicerConfig(this IServiceCollection services)
         //{

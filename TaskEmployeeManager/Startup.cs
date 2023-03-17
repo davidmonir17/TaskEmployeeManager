@@ -29,6 +29,8 @@ namespace TaskEmployeeManager
         {
             services.sqlconfigration(Configuration);
             services.RepositoryMgrConfig();
+            services.AddAutoMapper(typeof(Startup));
+            services.ConfigureServiceManager();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

@@ -8,5 +8,6 @@ namespace Services.Interface
 {
     public interface IServiceManager
     {
+        public IEmployeeService employeeService { get; }
     }
 }
