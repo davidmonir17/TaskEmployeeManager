@@ -22,7 +22,7 @@ namespace Domain.Configration
                 .WithMany(t => t.ManagerTasks)
                 .HasForeignKey(m => m.MangerId)
                 .IsRequired(true)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

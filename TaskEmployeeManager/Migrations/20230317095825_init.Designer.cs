@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace TaskEmployeeManager.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20230317095328_init")]
+    [Migration("20230317095825_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -166,7 +166,7 @@ namespace TaskEmployeeManager.Migrations
                     b.HasOne("Domain.Entities.Employee", "manger")
                         .WithMany("ManagerTasks")
                         .HasForeignKey("MangerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Statues", "statues")

@@ -164,7 +164,7 @@ namespace TaskEmployeeManager.Migrations
                     b.HasOne("Domain.Entities.Employee", "manger")
                         .WithMany("ManagerTasks")
                         .HasForeignKey("MangerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Statues", "statues")

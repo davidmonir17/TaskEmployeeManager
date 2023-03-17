@@ -83,8 +83,7 @@ namespace TaskEmployeeManager.Migrations
                         name: "FK_Tasks_Employees_MangerId",
                         column: x => x.MangerId,
                         principalTable: "Employees",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Tasks_Statues_statuesId",
                         column: x => x.statuesId,
