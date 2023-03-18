@@ -48,7 +48,7 @@ namespace Repository.Implmntation
         public Task GetTask(int id)
         {
             //return dbcontext.Tasks.Where(x => x.Id == id).FirstOrDefault();
-            return Find(x => x.Id == id).Include(x => x.manger).Include(x => x.statues).FirstOrDefault();
+            return Find(x => x.Id == id).Include(x => x.manger).Include(x => x.statues).Include(x => x.employee).FirstOrDefault();
         }
     }
 }
