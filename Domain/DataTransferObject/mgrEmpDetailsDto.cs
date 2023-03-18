@@ -13,8 +13,6 @@ namespace Domain.DataTransferObject
         public int Phone { get; set; }
         public DateTime Birthday { get; set; }
         public string Email { get; set; }
-        public string DepertmentName { get; set; }
         public int depId { get; set; }
     }
-}
 }
