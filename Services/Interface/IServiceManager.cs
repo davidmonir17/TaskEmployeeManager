@@ -9,5 +9,6 @@ namespace Services.Interface
     public interface IServiceManager
     {
         public IEmployeeService employeeService { get; }
+        public IManagerService ManagerService { get; }
     }
 }
