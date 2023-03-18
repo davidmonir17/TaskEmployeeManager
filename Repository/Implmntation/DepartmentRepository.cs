@@ -1,5 +1,6 @@
 ﻿using Domain.Context;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Repository.Interface;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,7 @@ namespace Repository.Implmntation
 
         public Depertment GetDepertment(int id)
         {
-            return Find(x => x.Id == id).OrderBy(x => x.Id).FirstOrDefault();
+            return Find(x => x.Id == id).Include(x => x.manger).OrderBy(x => x.Id).FirstOrDefault();
         }
     }
 }

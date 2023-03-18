@@ -33,6 +33,12 @@ namespace TaskEmployeeManager.MappingProfile
                 .ReverseMap();
 
             CreateMap<Task, MgrUpdTaskDto>().ReverseMap();
+            CreateMap<Depertment, DepertmentDto>()
+                .ForMember(x => x.ManagerName, opt => opt.MapFrom(x => x.manger.Name)).ReverseMap();
+
+            CreateMap<Depertment, AddDepDTo>().ReverseMap();
+
+            CreateMap<Employee, addMngrDto>().ReverseMap();
         }
     }
 }
