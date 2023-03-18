@@ -1,5 +1,6 @@
 ﻿using Domain.Context;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Repository.Interface;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,12 @@ namespace Repository.Implmntation
 
         public IEnumerable<Employee> GetAllEmployees(int Depid)
         {
-            return Find(x => x.depId == Depid).ToList();
+            return Find(x => x.depId == Depid).Include(x => x.depertment).ToList();
+        }
+
+        public IEnumerable<Employee> GetAllEmployeesExceptMgr(int Depid, int mgrId)
+        {
+            return Find(x => x.depId == Depid && x.Id != mgrId).Include(x => x.depertment).ToList();
         }
 
         public Employee GetEmployee(int id)
