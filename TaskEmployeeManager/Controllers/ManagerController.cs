@@ -35,7 +35,7 @@ namespace TaskEmployeeManager.Controllers
             var emps = service.ManagerService.GeteallEmps(MgrId);
             if (emps == null)
             {
-                return BadRequest("Invalid Manager Id");
+                return NotFound();
             }
             return Ok(emps);
         }
@@ -55,7 +55,7 @@ namespace TaskEmployeeManager.Controllers
             var deleted = service.ManagerService.DeleteEmployee(MgrId, empId);
             if (!deleted)
             {
-                return BadRequest("Failed For Delete Employee");
+                return NotFound("Failed For Delete Employee");
             }
             return NoContent();
         }
@@ -79,9 +79,94 @@ namespace TaskEmployeeManager.Controllers
             var empdetail = service.ManagerService.addNewEmployee(MgrId, employee);
             if (empdetail == null)
             {
-                return BadRequest("Failed in creation");
+                return NotFound("Failed in creation");
             }
             return Ok(empdetail);
+        }
+
+        [Route("Delete-Task/{MgrId}")]
+        [HttpDelete]
+        public IActionResult DeleteTask(int MgrId, [FromQuery] int TaskId)
+        {
+            if (MgrId == 0)
+            {
+                return BadRequest("Invalid Manager Id");
+            }
+            var cheack = service.ManagerService.checkMangerDep(MgrId);
+            if (!cheack)
+            {
+                return BadRequest("that Manger Id not is Manager of any depertment ");
+            }
+            var che = service.ManagerService.DeleteTaskForMgr(MgrId, TaskId);
+            if (!che)
+            {
+                return NotFound("Failed To Delete");
+            }
+            return NoContent();
+        }
+
+        [HttpGet("{MgrId}/GetAllTasks")]
+        public IActionResult GetAllTasks(int MgrId, [FromQuery] int statues)
+        {
+            if (MgrId == 0)
+            {
+                return BadRequest("Invalid Manager Id");
+            }
+            var cheack = service.ManagerService.checkMangerDep(MgrId);
+            if (!cheack)
+            {
+                return BadRequest("that Manger Id not is Manager of any depertment ");
+            }
+            var tasks = service.ManagerService.GetAlltasks(MgrId, statues);
+            if (tasks == null)
+            {
+                return NotFound();
+            }
+            return Ok(tasks);
+        }
+
+        [HttpGet("{MgrId}/employee/{empId}/GetAllTasksForEmployye")]
+        public IActionResult GetAllTasksForEmployye(int MgrId, int empId, [FromQuery] int statues)
+        {
+            if (MgrId == 0 || empId == 0)
+            {
+                return BadRequest("Invalid Manager Id Or Invalid Employee Id");
+            }
+            var cheack = service.ManagerService.checkMangerDep(MgrId);
+            if (!cheack)
+            {
+                return BadRequest("that Manger Id not is Manager of any depertment ");
+            }
+            var tasks = service.ManagerService.GetAlltasksForEmp(MgrId, empId, statues);
+            if (tasks == null)
+            {
+                return NotFound();
+            }
+            return Ok(tasks);
+        }
+
+        [HttpPost("{MgrId}/employee/{empId}/AddtaskToEmployee")]
+        public IActionResult AddtaskToEmployee(int MgrId, int empId, [FromBody] MgrAddTaskDto taskDto)
+        {
+            if (MgrId == 0 || empId == 0)
+            {
+                return BadRequest("Invalid Manager Id Or Invalid Employee Id");
+            }
+            var cheack = service.ManagerService.checkMangerDep(MgrId);
+            if (!cheack)
+            {
+                return BadRequest("that Manger Id not is Manager of any depertment ");
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Invalid employee spesifec");
+            }
+            var task = service.ManagerService.AddtaskToEmp(MgrId, empId, taskDto);
+            if (task == null)
+            {
+                return NotFound("Failed to add Task");
+            }
+            return Ok(task);
         }
 
         [HttpPut("{MgrId}")]
@@ -103,9 +188,56 @@ namespace TaskEmployeeManager.Controllers
             var employee = service.ManagerService.updateEmployee(MgrId, empDto);
             if (employee == null)
             {
-                return BadRequest("Failed in Updating");
+                return NotFound("Failed in Updating");
             }
             return Ok(employee);
+        }
+
+        [Route("Update-Task/{MgrId}")]
+        [HttpPut]
+        public IActionResult UpdateTaskForMgr(int MgrId, [FromBody] MgrUpdTaskDto taskdto)
+        {
+            if (MgrId == 0)
+            {
+                return BadRequest("Invalid Manager Id");
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Invalid employee spesifec");
+            }
+            var cheack = service.ManagerService.checkMangerDep(MgrId);
+            if (!cheack)
+            {
+                return BadRequest("that Manger Id not is Manager of any depertment ");
+            }
+            var task = service.ManagerService.updateTask(MgrId, taskdto);
+            if (task == null)
+            {
+                return NotFound();
+            }
+            return Ok(task);
+        }
+
+        [Route("ReAssign-Task/{MgrId}")]
+        [HttpPut]
+        public IActionResult ReAssignTaskForMgr(int MgrId, [FromQuery] int TaskId, [FromQuery] int NewEmpId)
+        {
+            if (MgrId == 0)
+            {
+                return BadRequest("Invalid Manager Id");
+            }
+
+            var cheack = service.ManagerService.checkMangerDep(MgrId);
+            if (!cheack)
+            {
+                return BadRequest("that Manger Id not is Manager of any depertment ");
+            }
+            var task = service.ManagerService.ReAssignTask(MgrId, TaskId, NewEmpId);
+            if (task == null)
+            {
+                return NotFound();
+            }
+            return Ok(task);
         }
     }
 }

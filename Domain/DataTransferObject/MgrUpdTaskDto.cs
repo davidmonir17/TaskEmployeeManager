@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace Domain.DataTransferObject
 {
-    public class MgrAddTaskDto
+    public class MgrUpdTaskDto
     {
+        public int Id { get; set; }
+
         [Required(ErrorMessage = "name is required field")]
         [MaxLength(60, ErrorMessage = "name Field not Exceded 60 char")]
         public string Name { get; set; }
@@ -20,7 +22,9 @@ namespace Domain.DataTransferObject
         [Required]
         public DateTime SubmitionDate { get; set; }
 
-        [Required]
         public int statuesId { get; set; }
+
+        public int MangerId { get; set; }
+        public int EmployeeId { get; set; }
     }
 }

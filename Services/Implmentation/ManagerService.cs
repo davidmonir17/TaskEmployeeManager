@@ -81,6 +81,44 @@ namespace Services.Implmentation
             return false;
         }
 
+        public bool DeleteTaskForMgr(int MgrId, int TaskId)
+        {
+            var manager = _repository.employeeRepository.GetEmployee(MgrId);
+            var task = _repository.taskRepository.GetTask(TaskId);
+            if (manager != null && task != null && task.MangerId == MgrId)
+            {
+                _repository.taskRepository.DeleteTask(task);
+                _repository.save();
+                return true;
+            }
+            return false;
+        }
+
+        public IEnumerable<MgrTaskDetials> GetAlltasks(int mgrId, int statues)
+        {
+            var manager = _repository.employeeRepository.GetEmployee(mgrId);
+            if (manager != null)
+            {
+                var tasks = _repository.taskRepository.GetAllTaskforMgr(mgrId, statues);
+                var taskDto = _mapper.Map<List<MgrTaskDetials>>(tasks);
+                return taskDto;
+            }
+            return null;
+        }
+
+        public IEnumerable<MgrTaskDetials> GetAlltasksForEmp(int mgrId, int EmpId, int statues)
+        {
+            var manager = _repository.employeeRepository.GetEmployee(mgrId);
+            var employee = _repository.employeeRepository.GetEmployee(EmpId);
+            if (manager != null && employee != null && manager.depId == employee.depId)
+            {
+                var tasks = _repository.taskRepository.GetAllTaskforMgrtoEmp(mgrId, EmpId, statues);
+                var taskDto = _mapper.Map<List<MgrTaskDetials>>(tasks);
+                return taskDto;
+            }
+            return null;
+        }
+
         public IEnumerable<mgrEmpDto> GeteallEmps(int mgrId)
         {
             var manager = _repository.employeeRepository.GetEmployee(mgrId);
@@ -89,6 +127,21 @@ namespace Services.Implmentation
                 var emps = _repository.employeeRepository.GetAllEmployeesExceptMgr(manager.depId, mgrId);
                 var ListEmps = _mapper.Map<List<mgrEmpDto>>(emps);
                 return ListEmps;
+            }
+            return null;
+        }
+
+        public MgrTaskDetials ReAssignTask(int MgrId, int TaskId, int NewEmpId)
+        {
+            var manager = _repository.employeeRepository.GetEmployee(MgrId);
+            var task = _repository.taskRepository.GetTask(TaskId);
+            if (manager != null && task != null)
+            {
+                task.EmployeeId = NewEmpId;
+                _repository.save();
+                var uptadedtask = _repository.taskRepository.GetTask(TaskId);
+                var TaskDto = _mapper.Map<MgrTaskDetials>(uptadedtask);
+                return TaskDto;
             }
             return null;
         }
@@ -104,6 +157,21 @@ namespace Services.Implmentation
                 var emp = _repository.employeeRepository.GetEmployee(EmpDto.Id);
                 var mgeEmp = _mapper.Map<mgrEmpDto>(emp);
                 return mgeEmp;
+            }
+            return null;
+        }
+
+        public MgrTaskDetials updateTask(int MgrId, MgrUpdTaskDto taskDto)
+        {
+            var manager = _repository.employeeRepository.GetEmployee(MgrId);
+            var task = _repository.taskRepository.GetTask(taskDto.Id);
+            if (manager != null && task != null)
+            {
+                _mapper.Map(taskDto, task);
+                _repository.save();
+                var taskupdated = _repository.taskRepository.GetTask(taskDto.Id);
+                var taskDtos = _mapper.Map<MgrTaskDetials>(taskupdated);
+                return taskDtos;
             }
             return null;
         }

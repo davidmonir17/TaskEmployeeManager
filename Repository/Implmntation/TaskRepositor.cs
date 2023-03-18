@@ -40,9 +40,18 @@ namespace Repository.Implmntation
         {
             if (statues == 0)
             {
-                return Find(x => x.MangerId == mgrId).OrderBy(x => x.SubmitionDate).ToList();
+                return Find(x => x.MangerId == mgrId).Include(x => x.manger).Include(x => x.statues).Include(x => x.employee).OrderBy(x => x.SubmitionDate).ToList();
             }
-            return Find(x => x.MangerId == mgrId && x.statuesId == statues).OrderBy(x => x.SubmitionDate).ToList();
+            return Find(x => x.MangerId == mgrId && x.statuesId == statues).Include(x => x.manger).Include(x => x.statues).Include(x => x.employee).OrderBy(x => x.SubmitionDate).ToList();
+        }
+
+        public IEnumerable<Task> GetAllTaskforMgrtoEmp(int mgrId, int Empid, int statues)
+        {
+            if (statues == 0)
+            {
+                return Find(x => x.MangerId == mgrId && x.EmployeeId == Empid).Include(x => x.manger).Include(x => x.statues).Include(x => x.employee).OrderBy(x => x.SubmitionDate).ToList();
+            }
+            return Find(x => x.MangerId == mgrId && x.EmployeeId == Empid && x.statuesId == statues).Include(x => x.manger).Include(x => x.statues).Include(x => x.employee).OrderBy(x => x.SubmitionDate).ToList();
         }
 
         public Task GetTask(int id)

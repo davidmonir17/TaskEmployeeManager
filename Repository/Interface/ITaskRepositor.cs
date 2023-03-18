@@ -17,5 +17,7 @@ namespace Repository.Interface
         IEnumerable<Task> GetAllTaskforMgr(int mgrId, int statues);
 
         IEnumerable<Task> GetAllTaskforEmp(int empid, int statues);
+
+        public IEnumerable<Task> GetAllTaskforMgrtoEmp(int mgrId, int Empid, int statues);
     }
 }

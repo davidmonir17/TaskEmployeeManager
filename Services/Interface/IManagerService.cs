@@ -20,5 +20,15 @@ namespace Services.Interface
         public mgrEmpDto updateEmployee(int mgrId, mgrUpdEmpDto EmpDto);
 
         public MgrTaskDetials AddtaskToEmp(int mgrId, int empId, MgrAddTaskDto taskDto);
+
+        public IEnumerable<MgrTaskDetials> GetAlltasks(int mgrId, int statues);
+
+        public IEnumerable<MgrTaskDetials> GetAlltasksForEmp(int mgrId, int EmpId, int statues);
+
+        public bool DeleteTaskForMgr(int MgrId, int TaskId);
+
+        public MgrTaskDetials updateTask(int MgrId, MgrUpdTaskDto taskDto);
+
+        public MgrTaskDetials ReAssignTask(int MgrId, int TaskId, int NewEmpId);
     }
 }
