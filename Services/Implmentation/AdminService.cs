@@ -44,6 +44,10 @@ namespace Services.Implmentation
                 var mang = _mapper.Map<Employee>(manager);
                 _repository.employeeRepository.AddEmployee(mang);
                 _repository.save();
+                depertment.MangerId = mang.Id;
+                _repository.departmentRepository.UpdateDepertment(depertment);
+                _repository.save();
+
                 var Mnager = _repository.employeeRepository.GetEmployee(mang.Id);
                 var MNagerDTo = _mapper.Map<mgrEmpDto>(Mnager);
                 return MNagerDTo;

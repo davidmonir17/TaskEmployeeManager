@@ -1,4 +1,5 @@
 ﻿using Domain.DataTransferObject;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services.Interface;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace TaskEmployeeManager.Controllers
 {
+    [Authorize(Roles = "Employee")]
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeeController : ControllerBase

@@ -1,4 +1,6 @@
 ﻿using Domain.DataTransferObject;
+using Domain.DataTransferObject.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services.Interface;
@@ -9,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace TaskEmployeeManager.Controllers
 {
+    [Authorize(Roles = "Manager")]
     [Route("api/[controller]")]
     [ApiController]
     public class ManagerController : ControllerBase
@@ -61,7 +64,7 @@ namespace TaskEmployeeManager.Controllers
         }
 
         [HttpPost("{MgrId}")]
-        public IActionResult AddEmployee(int MgrId, [FromBody] mgrAddEmp employee)
+        public async Task<IActionResult> AddEmployee(int MgrId, [FromBody] mgrAddEmp employee)
         {
             if (MgrId == 0)
             {
@@ -71,16 +74,30 @@ namespace TaskEmployeeManager.Controllers
             {
                 return BadRequest("Invalid employee spesifec");
             }
+
             var cheack = service.ManagerService.checkMangerDep(MgrId);
             if (!cheack)
             {
                 return BadRequest("that Manger Id not is Manager of any depertment ");
             }
+            string[] parts = employee.Email.Split('@');
+
+            var model = new RegisterModel
+            {
+                Name = employee.Name,
+                Email = employee.Email,
+                Username = parts[0],
+                Password = parts[0] + "@1234A"
+            };
+            var result = await service.authService.RegisterAsync(model, "Manager");
+            if (!result.IsAuthenticated)
+                return BadRequest(result.Message);
             var empdetail = service.ManagerService.addNewEmployee(MgrId, employee);
             if (empdetail == null)
             {
                 return NotFound("Failed in creation");
             }
+            service.emailService.SendEmail(employee.Email, "Congratues You is new employee with this mail and password", "A new Password: " + parts[0] + "@1234A");
             return Ok(empdetail);
         }
 

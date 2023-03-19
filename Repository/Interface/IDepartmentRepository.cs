@@ -16,5 +16,7 @@ namespace Repository.Interface
         Depertment GetDepertment(int id);
 
         IEnumerable<Depertment> GetAllDepertment();
+
+        public void UpdateDepertment(Depertment department);
     }
 }

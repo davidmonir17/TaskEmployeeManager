@@ -1,6 +1,10 @@
+using Domain.Context;
+using Domain.Entities;
+using Domain.Helper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,8 +31,12 @@ namespace TaskEmployeeManager
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<JWT>(Configuration.GetSection("JWT"));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<DataBaseContext>();
             services.sqlconfigration(Configuration);
             services.RepositoryMgrConfig();
+            services.autonticateConfigration(Configuration);
             services.AddAutoMapper(typeof(Startup));
             services.ConfigureServiceManager();
 
@@ -52,7 +60,7 @@ namespace TaskEmployeeManager
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

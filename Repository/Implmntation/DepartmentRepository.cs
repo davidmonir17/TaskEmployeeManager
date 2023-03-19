@@ -12,8 +12,11 @@ namespace Repository.Implmntation
 {
     public class DepartmentRepository : RepositoryBase<Depertment>, IDepartmentRepository
     {
+        private readonly DataBaseContext _dbContext;
+
         public DepartmentRepository(DataBaseContext dataBase) : base(dataBase)
         {
+            _dbContext = dataBase;
         }
 
         public void AddDepertment(Depertment depertment)
@@ -34,6 +37,11 @@ namespace Repository.Implmntation
         public Depertment GetDepertment(int id)
         {
             return Find(x => x.Id == id).Include(x => x.manger).OrderBy(x => x.Id).FirstOrDefault();
+        }
+
+        public void UpdateDepertment(Depertment department)
+        {
+            _dbContext.Entry(department).State = EntityState.Modified;
         }
     }
 }

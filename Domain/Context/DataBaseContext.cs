@@ -1,5 +1,6 @@
 ﻿using Domain.Configration;
 using Domain.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,9 +9,9 @@ using System.Text;
 
 namespace Domain.Context
 {
-    public class DataBaseContext : DbContext
+    public class DataBaseContext : IdentityDbContext<ApplicationUser>
     {
-        public DataBaseContext(DbContextOptions options) : base(options)
+        public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options)
         {
         }
 

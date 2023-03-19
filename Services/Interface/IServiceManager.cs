@@ -11,5 +11,7 @@ namespace Services.Interface
         public IEmployeeService employeeService { get; }
         public IManagerService ManagerService { get; }
         public IAdminService adminService { get; }
+        public IAuthService authService { get; }
+        public IEmailService emailService { get; }
     }
 }
