@@ -1,10 +1,12 @@
-﻿using Domain.DataTransferObject;
+﻿using AutoMapper;
+using Domain.DataTransferObject;
 using Domain.DataTransferObject.Identity;
 using Domain.Entities;
 using Domain.Helper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Repository.Interface;
 using Services.Interface;
 using System;
 using System.Collections.Generic;
@@ -23,11 +25,16 @@ namespace Services.Implmentation
         // private readonly RoleManager<IdentityRole> _roleManager;
         private readonly JWT _jwt;
 
-        public AuthService(UserManager<ApplicationUser> userManager, IOptions<JWT> jwt)
+        private readonly IRepositoryManager _repository;
+        private readonly IMapper _mapper;
+
+        public AuthService(UserManager<ApplicationUser> userManager, IOptions<JWT> jwt, IRepositoryManager repository, IMapper mapper)
         {
             _userManager = userManager;
 
             _jwt = jwt.Value;
+            _repository = repository;
+            _mapper = mapper;
         }
 
         public async Task<AuthModel> GetTokenAsync(TokenRequestModel model)
@@ -44,6 +51,19 @@ namespace Services.Implmentation
 
             var jwtSecurityToken = await CreateJwtToken(user);
             var rolesList = await _userManager.GetRolesAsync(user);
+
+            var emp = _repository.employeeRepository.GetEmployeeForAuth(model.Email);
+            if (emp is null)
+            {
+                authModel.empiId = null;
+                authModel.depId = null;
+            }
+            else
+            {
+                var empdto = _mapper.Map<recognizeEmployee>(emp);
+                authModel.empiId = empdto.Id;
+                authModel.depId = empdto.depId;
+            }
 
             authModel.IsAuthenticated = true;
             authModel.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);

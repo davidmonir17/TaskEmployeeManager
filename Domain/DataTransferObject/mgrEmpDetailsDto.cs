@@ -14,5 +14,6 @@ namespace Domain.DataTransferObject
         public DateTime Birthday { get; set; }
         public string Email { get; set; }
         public int depId { get; set; }
+        public string departmentName { get; set; }
     }
 }

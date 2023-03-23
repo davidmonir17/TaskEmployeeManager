@@ -31,6 +31,7 @@ namespace Services.Implmentation
                 _repository.employeeRepository.AddEmployee(emp);
                 _repository.save();
                 var empDetail = _mapper.Map<mgrEmpDetailsDto>(emp);
+                empDetail.departmentName = manager.depertment.Name;
                 return empDetail;
             }
             return null;

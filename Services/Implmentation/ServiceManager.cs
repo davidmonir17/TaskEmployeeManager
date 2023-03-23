@@ -26,7 +26,7 @@ namespace Services.Implmentation
             _employeeService = new Lazy<IEmployeeService>(() => new EmployeeService(repository, mapper));
             _ManagerService = new Lazy<IManagerService>(() => new ManagerService(repository, mapper));
             _adminService = new Lazy<IAdminService>(() => new AdminService(repository, mapper));
-            _authService = new Lazy<IAuthService>(() => new AuthService(userManager, jwt));
+            _authService = new Lazy<IAuthService>(() => new AuthService(userManager, jwt, repository, mapper));
             _mailService = new Lazy<IEmailService>(() => new EmailService("ejadatask@outlook.com", "a123456789A@"));
         }
 

@@ -38,7 +38,12 @@ namespace Repository.Implmntation
 
         public Employee GetEmployee(int id)
         {
-            return Find(x => x.Id == id).FirstOrDefault();
+            return Find(x => x.Id == id).Include(x => x.depertment).FirstOrDefault();
+        }
+
+        public Employee GetEmployeeForAuth(string email)
+        {
+            return Find(x => x.Email == email).FirstOrDefault();
         }
     }
 }

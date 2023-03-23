@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Domain.Entities;
+using Domain.DataTransferObject.Identity;
 
 namespace TaskEmployeeManager.MappingProfile
 {
@@ -39,6 +40,7 @@ namespace TaskEmployeeManager.MappingProfile
             CreateMap<Depertment, AddDepDTo>().ReverseMap();
 
             CreateMap<Employee, addMngrDto>().ReverseMap();
+            CreateMap<Employee, recognizeEmployee>().ReverseMap();
         }
     }
 }

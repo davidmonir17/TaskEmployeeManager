@@ -39,6 +39,25 @@ namespace TaskEmployeeManager
             services.autonticateConfigration(Configuration);
             services.AddAutoMapper(typeof(Startup));
             services.ConfigureServiceManager();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAnyOrigin",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                    });
+            });
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy("AllowSpecificOrigin",
+            //        builder => builder
+            //            .WithOrigins("http://localhost:3000")
+            //            .WithHeaders("Sec-Fetch-Mode")
+            //            .AllowAnyMethod()
+            //            .AllowCredentials());
+            //});
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -56,7 +75,8 @@ namespace TaskEmployeeManager
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TaskEmployeeManager v1"));
             }
-
+            // app.UseCors("AllowSpecificOrigin");
+            app.UseCors("AllowAnyOrigin");
             app.UseHttpsRedirection();
 
             app.UseRouting();

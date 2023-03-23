@@ -18,5 +18,7 @@ namespace Repository.Interface
         public IEnumerable<Employee> GetAllEmployeesExceptMgr(int Depid, int mgrId);
 
         public Employee GetEmployee(int id);
+
+        public Employee GetEmployeeForAuth(string email);
     }
 }
