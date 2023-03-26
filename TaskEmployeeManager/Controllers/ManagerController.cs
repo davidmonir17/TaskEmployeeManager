@@ -43,6 +43,26 @@ namespace TaskEmployeeManager.Controllers
             return Ok(emps);
         }
 
+        [HttpGet("{MgrId}/employee/{empid}")]
+        public IActionResult GetemployeesforMgr(int MgrId, int empid)
+        {
+            if (MgrId == 0 && empid == 0)
+            {
+                return BadRequest("Invalid Manager Id or Employee Id");
+            }
+            var cheack = service.ManagerService.checkMangerDep(MgrId);
+            if (!cheack)
+            {
+                return BadRequest("that Manger Id not is Manager of any depertment ");
+            }
+            var emps = service.ManagerService.GetEmployee(MgrId, empid);
+            if (emps == null)
+            {
+                return NotFound();
+            }
+            return Ok(emps);
+        }
+
         [HttpDelete("{MgrId}/employee/{empId}")]
         public IActionResult DeleteEmployee(int MgrId, int empId)
         {

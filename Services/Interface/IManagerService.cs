@@ -30,5 +30,7 @@ namespace Services.Interface
         public MgrTaskDetials updateTask(int MgrId, MgrUpdTaskDto taskDto);
 
         public MgrTaskDetials ReAssignTask(int MgrId, int TaskId, int NewEmpId);
+
+        public mgrEmpDto GetEmployee(int mgrId, int empid);
     }
 }

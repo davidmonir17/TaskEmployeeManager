@@ -132,6 +132,18 @@ namespace Services.Implmentation
             return null;
         }
 
+        public mgrEmpDto GetEmployee(int mgrId, int empid)
+        {
+            var manager = _repository.employeeRepository.GetEmployee(mgrId);
+            var employee = _repository.employeeRepository.GetEmployee(empid);
+            if (manager != null && employee != null)
+            {
+                var empDto = _mapper.Map<mgrEmpDto>(employee);
+                return empDto;
+            }
+            return null;
+        }
+
         public MgrTaskDetials ReAssignTask(int MgrId, int TaskId, int NewEmpId)
         {
             var manager = _repository.employeeRepository.GetEmployee(MgrId);
